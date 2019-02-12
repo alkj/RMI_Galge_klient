@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
  * @author alexander
  */
 public class View extends javax.swing.JFrame {
-    private GalgeInterf g;
+    private GalgeInterface g;
     private boolean forbindelse = false;
 
     /**
@@ -228,8 +228,11 @@ public class View extends javax.swing.JFrame {
     
     
     private void serverCon(){
+
         try {
-            GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204:5477/s165477");
+            //GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204:5477/s165477");
+            GalgeInterface gi = (GalgeInterface) Naming.lookup("rmi://localhost:1234/galge");
+
             this.g = gi;
             toggle_newGame.setText("Forbindelse oprettet");
             forbindelse = true;
