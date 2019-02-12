@@ -228,7 +228,6 @@ public class View extends javax.swing.JFrame {
     
     
     private void serverCon(){
-
         try {
             GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204:5477/s165477");
             this.g = gi;
