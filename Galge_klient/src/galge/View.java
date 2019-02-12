@@ -3,19 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package galge_klient;
+package galge;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import server.GalgeImpl;
+import server.GalgeInterf;
+import server.GalgeLogik;
 
 /**
  *
  * @author alexander
  */
 public class View extends javax.swing.JFrame {
-    private GalgeInterface g;
+    
+    private GalgeInterf g;
     private boolean forbindelse = false;
 
     /**
@@ -176,21 +180,16 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JToggleButton toggle_newGame;
     // End of variables declaration//GEN-END:variables
 
-
-
-    //------------------ logik-----------//
-
-    /**
-     *
-     */
-
-
-
-  
-
-        private void buttonPressed() {
-            
-
+    
+    
+    
+    //-------------buttons logik-----------//
+    
+    
+    
+    
+    private void buttonPressed() {
+        
         String str = text_guess.getText().toLowerCase();
         text_guess.setText("");
         
@@ -228,11 +227,9 @@ public class View extends javax.swing.JFrame {
     
     
     private void serverCon(){
-
+        
         try {
-            //GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204:5477/s165477");
-            GalgeInterface gi = (GalgeInterface) Naming.lookup("rmi://localhost:1234/galge");
-
+            GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204:5477/s165477");
             this.g = gi;
             toggle_newGame.setText("Forbindelse oprettet");
             forbindelse = true;
@@ -255,10 +252,6 @@ public class View extends javax.swing.JFrame {
             System.err.println("kunne ikke starte spillet igen " + e);
         }
     }
-
-    
-    
-    
     
 }
 
