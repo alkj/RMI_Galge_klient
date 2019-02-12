@@ -1,7 +1,7 @@
 
 package galge_klient;
 
-public interface GalgeInterf extends java.rmi.Remote{
+public interface GalgeInterface extends java.rmi.Remote{
     
     void startSpil()            throws Exception;
     String getOrd()             throws java.rmi.RemoteException;
@@ -12,6 +12,4 @@ public interface GalgeInterf extends java.rmi.Remote{
     boolean erSpilletVundet()   throws java.rmi.RemoteException;
     boolean erSpilletSlut()     throws java.rmi.RemoteException;
     void startIgen()            throws java.rmi.RemoteException;
-    
-    
 }
