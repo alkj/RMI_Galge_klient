@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Scanner;
 import server.GalgeImpl;
 import server.GalgeInterf;
 import server.GalgeLogik;
@@ -163,7 +164,8 @@ public class View extends javax.swing.JFrame {
 
     private void toggle_newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggle_newGameActionPerformed
 
-        serverCon();        
+        login();
+                
         
     }//GEN-LAST:event_toggle_newGameActionPerformed
 
@@ -230,6 +232,7 @@ public class View extends javax.swing.JFrame {
     
     
     private void serverCon(){
+       
         
         try {
             GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204:5477/s165477");
@@ -245,7 +248,7 @@ public class View extends javax.swing.JFrame {
             toggle_newGame.setSelected(forbindelse);
         }
         
-        login();
+        
 
     }
    
@@ -260,11 +263,21 @@ public class View extends javax.swing.JFrame {
     
     private void login(){
         Brugeradmin ba;
+        Scanner sc;
+        sc = new Scanner(System.in);
+        System.out.print("Indtast dit brugernavn: ");
+        String brugernavn = sc.nextLine();
+        System.out.print("Indtast din adgangskode: ");
+        String kode = sc.nextLine();
+        
         try {
             ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
-            System.out.println("logged ind");
+            ba.hentBruger(brugernavn, kode);
+            System.out.println("--------logget ind--------");
+            serverCon();
         } catch (Exception e) {
             System.err.println("ikke logget ind");
+            
         }
 
         
