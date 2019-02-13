@@ -5,6 +5,9 @@
  */
 package galge;
 
+import brugerautorisation.data.Bruger;
+import brugerautorisation.data.Diverse;
+import brugerautorisation.transport.rmi.Brugeradmin;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -21,6 +24,7 @@ public class View extends javax.swing.JFrame {
     
     private GalgeInterf g;
     private boolean forbindelse = false;
+    private boolean loggedin = false;
 
     /**
      * Creates new form View
@@ -159,8 +163,7 @@ public class View extends javax.swing.JFrame {
 
     private void toggle_newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggle_newGameActionPerformed
 
-        serverCon();
-        
+        serverCon();        
         
     }//GEN-LAST:event_toggle_newGameActionPerformed
 
@@ -233,7 +236,7 @@ public class View extends javax.swing.JFrame {
             this.g = gi;
             toggle_newGame.setText("Forbindelse oprettet");
             forbindelse = true;
-            buttonPressed();
+            //buttonPressed();
         } catch (MalformedURLException | NotBoundException | RemoteException e) {
             System.err.println("der er ikke forbindelse til serveren" + e);
             toggle_newGame.setText("ingen forbindelse");
@@ -241,6 +244,8 @@ public class View extends javax.swing.JFrame {
         } finally {
             toggle_newGame.setSelected(forbindelse);
         }
+        
+        login();
 
     }
    
@@ -252,6 +257,22 @@ public class View extends javax.swing.JFrame {
             System.err.println("kunne ikke starte spillet igen " + e);
         }
     }
+    
+    private void login(){
+        Brugeradmin ba;
+        try {
+            ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
+            System.out.println("logged ind");
+        } catch (Exception e) {
+            System.err.println("ikke logget ind");
+        }
+
+        
+        
+        
+    }
+    
+    
     
 }
 
