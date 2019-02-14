@@ -51,6 +51,10 @@ public class View extends javax.swing.JFrame {
         label_errors = new javax.swing.JLabel();
         panel_ = new java.awt.Panel();
         button_restart = new javax.swing.JButton();
+        textBrugernavn = new javax.swing.JTextField();
+        textKodeord = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,6 +96,16 @@ public class View extends javax.swing.JFrame {
             }
         });
 
+        textBrugernavn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textBrugernavnActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("brugernavn");
+
+        jLabel2.setText("kodeord");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,8 +131,18 @@ public class View extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(161, 161, 161)
                                 .addComponent(label_guess)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                        .addComponent(panel_, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(panel_, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(183, 183, 183)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel2)
+                                    .addComponent(textBrugernavn)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(textKodeord))
+                                .addGap(0, 66, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -134,21 +158,29 @@ public class View extends javax.swing.JFrame {
                     .addComponent(toggle_newGame))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addGap(35, 35, 35)
                         .addComponent(label_guess)
                         .addGap(46, 46, 46)
                         .addComponent(text_guess, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                         .addComponent(button_guess)
                         .addGap(55, 55, 55))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(panel_, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addComponent(label_errors)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button_restart)))
+                        .addComponent(button_restart))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textBrugernavn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textKodeord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panel_, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -173,14 +205,22 @@ public class View extends javax.swing.JFrame {
         startIgen();        // TODO add your handling code here:
     }//GEN-LAST:event_button_restartActionPerformed
 
+    private void textBrugernavnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBrugernavnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textBrugernavnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_guess;
     private javax.swing.JButton button_restart;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel label_errors;
     private javax.swing.JLabel label_guess;
     private javax.swing.JLabel label_title;
     private java.awt.Panel panel_;
+    private javax.swing.JTextField textBrugernavn;
+    private javax.swing.JTextField textKodeord;
     private javax.swing.JTextField text_guess;
     private javax.swing.JToggleButton toggle_newGame;
     // End of variables declaration//GEN-END:variables
@@ -239,7 +279,7 @@ public class View extends javax.swing.JFrame {
             this.g = gi;
             toggle_newGame.setText("Forbindelse oprettet");
             forbindelse = true;
-            //buttonPressed();
+            buttonPressed();
         } catch (MalformedURLException | NotBoundException | RemoteException e) {
             System.err.println("der er ikke forbindelse til serveren" + e);
             toggle_newGame.setText("ingen forbindelse");
@@ -263,20 +303,23 @@ public class View extends javax.swing.JFrame {
     
     private void login(){
         Brugeradmin ba;
-        Scanner sc;
-        sc = new Scanner(System.in);
-        System.out.print("Indtast dit brugernavn: ");
-        String brugernavn = sc.nextLine();
-        System.out.print("Indtast din adgangskode: ");
-        String kode = sc.nextLine();
-        
+        //Scanner sc;
+        //sc = new Scanner(System.in);
+        //System.out.print("Indtast dit brugernavn: ");
+        //String brugernavn = sc.nextLine();
+        //System.out.print("Indtast din adgangskode: ");
+        //String kode = sc.nextLine();
+        String br = textBrugernavn.getText().toString();
+        String ko = textKodeord.getText().toString();
         try {
             ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
-            ba.hentBruger(brugernavn, kode);
+            ba.hentBruger(br, ko);
             System.out.println("--------logget ind--------");
             serverCon();
         } catch (Exception e) {
             System.err.println("ikke logget ind");
+            label_errors.setText("forkert brugernavn/kode");
+            toggle_newGame.setSelected(loggedin);
             
         }
 
