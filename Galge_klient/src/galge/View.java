@@ -5,9 +5,6 @@
  */
 package galge;
 
-import brugerautorisation.data.Bruger;
-import brugerautorisation.data.Diverse;
-import brugerautorisation.transport.rmi.Brugeradmin;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -22,7 +19,6 @@ import server.GalgeInterf;
 public class View extends javax.swing.JFrame {
     
     private GalgeInterf g;
-    private boolean forbindelse = false;
     private boolean loggedin = false;
 
     /**
@@ -194,8 +190,7 @@ public class View extends javax.swing.JFrame {
 
     private void toggle_newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggle_newGameActionPerformed
 
-        login();
-                
+          Connect();
         
     }//GEN-LAST:event_toggle_newGameActionPerformed
 
@@ -235,22 +230,23 @@ public class View extends javax.swing.JFrame {
         
         String str = text_guess.getText().toLowerCase();
         text_guess.setText("");
+        String synligtOrd;
         
         try {
-            g.gætBogstav(str);
-            label_guess.setText(this.g.getOrd());
+            synligtOrd = g.gæt(str);
+            label_guess.setText(synligtOrd);
             label_errors.setText("du har " + g.antalFejl() + "/7 fejl");
         } catch (RemoteException | NullPointerException e) {
             System.err.println("der er ikke forbindelse til serveren" + e);
             toggle_newGame.setText("ingen forbindelse");
-            forbindelse = false;
+            this.loggedin=false;
         } finally {
-            toggle_newGame.setSelected(forbindelse);
+            toggle_newGame.setSelected(this.loggedin);
         }
             
         
         //panel_.imageUpdate(img, NORMAL, WIDTH, WIDTH, WIDTH, WIDTH)
-        try {            
+        try {
             if (g.erSpilletSlut()) {
                 if (g.erSpilletVundet()) {
                     label_errors.setText("tillykke!\ndu har vundet!\n" + g.antalFejl() + " fejl" );
@@ -261,34 +257,14 @@ public class View extends javax.swing.JFrame {
         } catch (RemoteException | NullPointerException e) {
             System.err.println("der er ikke forbindelse til serveren" + e);
             toggle_newGame.setText("ingen forbindelse");
-            forbindelse = false;
+            loggedin = false;
         } finally {
-            toggle_newGame.setSelected(forbindelse);
+            toggle_newGame.setSelected(loggedin);
         }
     }
 
     
-    
-    private void serverCon(){
-       
-        
-        try {
-            GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204:5477/s165477");
-            this.g = gi;
-            toggle_newGame.setText("Forbindelse oprettet");
-            forbindelse = true;
-            buttonPressed();
-        } catch (MalformedURLException | NotBoundException | RemoteException e) {
-            System.err.println("der er ikke forbindelse til serveren" + e);
-            toggle_newGame.setText("ingen forbindelse");
-            forbindelse = false;
-        } finally {
-            toggle_newGame.setSelected(forbindelse);
-        }
-        
-        
 
-    }
    
     private void startIgen(){
         try {
@@ -298,36 +274,37 @@ public class View extends javax.swing.JFrame {
             System.err.println("kunne ikke starte spillet igen " + e);
         }
     }
-    
-    private void login(){
-        Brugeradmin ba;
-        //Scanner sc;
-        //sc = new Scanner(System.in);
-        //System.out.print("Indtast dit brugernavn: ");
-        //String brugernavn = sc.nextLine();
-        //System.out.print("Indtast din adgangskode: ");
-        //String kode = sc.nextLine();
-        String br = textBrugernavn.getText().toString();
-        String ko = textKodeord.getText().toString();
+
+    private void Connect() {
+        
+                
         try {
-            ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
-            ba.hentBruger(br, ko);
-            System.out.println("--------logget ind--------");
-            serverCon();
-        } catch (Exception e) {
-            System.err.println("ikke logget ind");
-            label_errors.setText("forkert brugernavn/kode");
+//            GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204:5477/s165477");
+            GalgeInterf gi  = (GalgeInterf) Naming.lookup("rmi://localhost:1234/galge");
+            this.g = gi;
+            loggedin = gi.logInd(textBrugernavn.getText().toString(), textKodeord.getText().toString());
+        } catch (MalformedURLException | NotBoundException | RemoteException e) {
+            System.err.println("der er ikke forbindelse til serveren" + e);
+            toggle_newGame.setText("ingen forbindelse");
+            loggedin = false;
+        } finally {
             toggle_newGame.setSelected(loggedin);
-            
+        }
+
+        if (loggedin) {
+        toggle_newGame.setText("Forbindelse oprettet");
+        buttonPressed();                
+        } else {
+            System.err.println("du er ikke logget ind på serveren");
+            toggle_newGame.setText("forkert kode tryk her igen");
         }
 
         
         
-        
+
+
+
+
     }
     
-    
-    
 }
-
-
