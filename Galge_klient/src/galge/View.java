@@ -228,14 +228,18 @@ public class View extends javax.swing.JFrame {
     
     private void buttonPressed() {
         
+        String brugerNavn = textBrugernavn.getText().toString();
+        String kodeOrd = textKodeord.getText().toString();
+        
         String str = text_guess.getText().toLowerCase();
         text_guess.setText("");
+        
         String synligtOrd;
         
         try {
-            synligtOrd = g.gæt(str);
+            synligtOrd = g.gæt(brugerNavn, kodeOrd, str);
             label_guess.setText(synligtOrd);
-            label_errors.setText("du har " + g.antalFejl() + "/7 fejl");
+            label_errors.setText("du har " + g.antalFejl(brugerNavn, kodeOrd) + "/7 fejl");
         } catch (RemoteException | NullPointerException e) {
             System.err.println("der er ikke forbindelse til serveren" + e);
             toggle_newGame.setText("ingen forbindelse");
@@ -247,9 +251,9 @@ public class View extends javax.swing.JFrame {
         
         //panel_.imageUpdate(img, NORMAL, WIDTH, WIDTH, WIDTH, WIDTH)
         try {
-            if (g.erSpilletSlut()) {
-                if (g.erSpilletVundet()) {
-                    label_errors.setText("tillykke!\ndu har vundet!\n" + g.antalFejl() + " fejl" );
+            if (g.erSpilletSlut(brugerNavn, kodeOrd)) {
+                if (g.erSpilletVundet(brugerNavn, kodeOrd)) {
+                    label_errors.setText("tillykke!\ndu har vundet!\n" + g.antalFejl(brugerNavn, kodeOrd) + " fejl" );
                 } else {
                     label_errors.setText("du har tabt!");
                 }
@@ -267,8 +271,11 @@ public class View extends javax.swing.JFrame {
 
    
     private void startIgen(){
+        String brugerNavn = textBrugernavn.getText().toString();
+        String kodeOrd = textKodeord.getText().toString();
+
         try {
-            g.startIgen();
+            g.startIgen(brugerNavn, kodeOrd);
             buttonPressed();
         } catch (RemoteException | NullPointerException e) {
             System.err.println("kunne ikke starte spillet igen " + e);
@@ -276,13 +283,14 @@ public class View extends javax.swing.JFrame {
     }
 
     private void Connect() {
-        
+        String brugerNavn = textBrugernavn.getText().toString();
+        String kodeOrd = textKodeord.getText().toString();
                 
         try {
 //            GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204:5477/s165477");
             GalgeInterf gi  = (GalgeInterf) Naming.lookup("rmi://localhost:1234/galge");
             this.g = gi;
-            loggedin = gi.logInd(textBrugernavn.getText().toString(), textKodeord.getText().toString());
+            loggedin = gi.logInd(brugerNavn, kodeOrd);
         } catch (MalformedURLException | NotBoundException | RemoteException e) {
             System.err.println("der er ikke forbindelse til serveren" + e);
             toggle_newGame.setText("ingen forbindelse");
