@@ -287,8 +287,10 @@ public class View extends javax.swing.JFrame {
         String kodeOrd = textKodeord.getText().toString();
                 
         try {
-//            GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204:5477/s165477");
-            GalgeInterf gi  = (GalgeInterf) Naming.lookup("rmi://localhost:1234/galge");
+            GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204:5477/s165477");
+//            GalgeInterf gi  = (GalgeInterf) Naming.lookup("rmi://localhost:1234/galge");
+//            GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204/s165477");
+
             this.g = gi;
             loggedin = gi.logInd(brugerNavn, kodeOrd);
         } catch (MalformedURLException | NotBoundException | RemoteException e) {
