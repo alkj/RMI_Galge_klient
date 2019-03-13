@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package galge;
 
 import java.net.MalformedURLException;
@@ -20,14 +20,14 @@ public class View extends javax.swing.JFrame {
     
     private GalgeInterf g;
     private boolean loggedin = false;
-
+    
     /**
      * Creates new form View
      */
     public View() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -180,29 +180,29 @@ public class View extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void button_guessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_guessActionPerformed
         
-          buttonPressed();
-
+        buttonPressed();
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_button_guessActionPerformed
-
+    
     private void toggle_newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggle_newGameActionPerformed
-
-          Connect();
+        
+        Connect();
         
     }//GEN-LAST:event_toggle_newGameActionPerformed
-
+    
     private void button_restartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_restartActionPerformed
         startIgen();        // TODO add your handling code here:
     }//GEN-LAST:event_button_restartActionPerformed
-
+    
     private void textBrugernavnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textBrugernavnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textBrugernavnActionPerformed
-
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_guess;
     private javax.swing.JButton button_restart;
@@ -217,7 +217,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JTextField text_guess;
     private javax.swing.JToggleButton toggle_newGame;
     // End of variables declaration//GEN-END:variables
-
+    
     
     
     
@@ -247,7 +247,7 @@ public class View extends javax.swing.JFrame {
         } finally {
             toggle_newGame.setSelected(this.loggedin);
         }
-            
+        
         
         //panel_.imageUpdate(img, NORMAL, WIDTH, WIDTH, WIDTH, WIDTH)
         try {
@@ -266,33 +266,42 @@ public class View extends javax.swing.JFrame {
             toggle_newGame.setSelected(loggedin);
         }
     }
-
     
-
-   
+    
+    
+    
     private void startIgen(){
         String brugerNavn = textBrugernavn.getText().toString();
         String kodeOrd = textKodeord.getText().toString();
-
+        
         try {
             g.startIgen(brugerNavn, kodeOrd);
             buttonPressed();
         } catch (RemoteException | NullPointerException e) {
             System.err.println("kunne ikke starte spillet igen " + e);
+            try {
+                g.startSpil(brugerNavn, kodeOrd);
+                buttonPressed();                
+            } catch (Exception e2) {
+                System.err.println("kunne heller ikke starte spillet " + e2);
+            }
+            
         }
+        
+        
     }
-
+    
     private void Connect() {
         String brugerNavn = textBrugernavn.getText().toString();
         String kodeOrd = textKodeord.getText().toString();
-                
+        
         try {
             GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204:5477/s165477");
 //            GalgeInterf gi  = (GalgeInterf) Naming.lookup("rmi://localhost:1234/galge");
 //            GalgeInterf gi = (GalgeInterf) Naming.lookup("rmi://130.225.170.204/s165477");
 
-            this.g = gi;
-            loggedin = gi.logInd(brugerNavn, kodeOrd);
+        this.g = gi;
+        loggedin = gi.logInd(brugerNavn, kodeOrd);
         } catch (MalformedURLException | NotBoundException | RemoteException e) {
             System.err.println("der er ikke forbindelse til serveren" + e);
             toggle_newGame.setText("ingen forbindelse");
@@ -300,21 +309,21 @@ public class View extends javax.swing.JFrame {
         } finally {
             toggle_newGame.setSelected(loggedin);
         }
-
+        
         if (loggedin) {
-        toggle_newGame.setText("Forbindelse oprettet");
-        buttonPressed();                
+            toggle_newGame.setText("Forbindelse oprettet");
+            buttonPressed();
         } else {
             System.err.println("du er ikke logget ind på serveren");
             toggle_newGame.setText("forkert kode tryk her igen");
         }
-
         
         
-
-
-
-
+        
+        
+        
+        
+        
     }
     
 }
